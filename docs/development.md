@@ -20,5 +20,5 @@ mise run hooks   # pre-push hook that runs `mise run check`
 | `mise run ci` | `lint` and `test`, as CI runs them |
 | `mise run check` | `ci` plus a Gitleaks scan of the tree and history |
 
-CI runs `mise run ci` on macOS 26, `mise run test` on macOS 15 for Apple Silicon
-and Intel, and Gitleaks on Linux.
+CI runs `mise run ci` on macOS 26, `mise run test` on macOS 14 (Apple Silicon) and
+macOS 15 (Intel), and Gitleaks on Linux.

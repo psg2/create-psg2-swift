@@ -38,8 +38,6 @@ jobs:
         env:
           TEMPLATE_APP_RELEASE_SIGNING: adhoc
         run: mise run package-release
-      - name: Check the universal app
-        run: ./Scripts/test-app.sh
       - name: Publish release assets
         env:
           GH_TOKEN: ${{ github.token }}

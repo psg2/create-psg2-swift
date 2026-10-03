@@ -60,6 +60,7 @@ fi
 
 cp "$ROOT/Resources/Info.plist" "$APP/Contents/Info.plist"
 plutil -replace CFBundleShortVersionString -string "$VERSION" "$APP/Contents/Info.plist"
+plutil -replace CFBundleVersion -string "$VERSION" "$APP/Contents/Info.plist"
 
 ICONSET="$STAGING/AppIcon.iconset"
 mkdir -p "$ICONSET"

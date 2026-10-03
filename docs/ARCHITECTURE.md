@@ -11,5 +11,5 @@ Scripts/                      Build, run, bundle checks, packaging and uninstall
 
 `Scripts/build.sh` compiles the app product with SwiftPM, once per architecture
 for a universal build, and assembles the `.app` bundle. It copies
-`Resources/Info.plist`, stamps the version from `VERSION`, builds the icon set
+`Resources/Info.plist`, stamps `VERSION` into both version keys, builds the icon set
 and signs the bundle ad hoc.

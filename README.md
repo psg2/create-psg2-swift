@@ -8,10 +8,10 @@ README with the app's own, `docs/APP_README.md`.
 ## Start a new app
 
 ```sh
-git clone https://github.com/pgsereno/create-psg2-swift.git my-app
+git clone https://github.com/psg2/create-psg2-swift.git my-app
 cd my-app
-./setup.sh                      # asks for the name and bundle identifier
-./setup.sh "My App" com.example.my-app   # or pass them
+./setup.sh                                           # asks for each value
+./setup.sh "My App" com.example.my-app psg2/my-app   # or pass them
 ```
 
 The script replaces every placeholder, renames the Swift targets, starts a fresh
@@ -25,6 +25,7 @@ Git history, installs the pinned tools and the pre-push hook, and runs
 | `template-app` | `my-app` |
 | `com.psg2.template-app` | the bundle identifier you enter |
 | `TEMPLATE_APP_` | `MY_APP_` (environment variables) |
+| `psg2/template-app` | the GitHub repository you enter |
 
 ## What every app gets
 
@@ -33,23 +34,30 @@ Git history, installs the pinned tools and the pre-push hook, and runs
   language mode.
 - **mise** pins ShellCheck, actionlint, Gitleaks and Lefthook, and defines the
   tasks: `format`, `lint` (`lint:swift`, `lint:shell`, `lint:actions`,
-  `lint:plist`), `test:unit`, `test:app`, `test`, `ci`, `scan-secrets`, `check`,
+  `lint:plist`), `test:unit`, `test:app` (signature, icon, versions, minimum
+  macOS and the `--version` contract), `test`, `ci`, `scan-secrets`, `check`,
   `build`, `install`, `uninstall`, `run`, `package-release`, `clean`, `hooks`.
 - **Formatting.** swift-format with four spaces and 140 columns, plus `.editorconfig`.
-- **A versioned `Resources/Info.plist`.** The build stamps `VERSION` into it.
+- **A versioned `Resources/Info.plist`.** The build stamps `VERSION` into both
+  version keys, so a release only bumps `VERSION`.
   Output goes to `build/`, and releases to `build/release/`.
 - **GitHub.** CI with a Gitleaks job, `mise run ci` on macOS 26, and `mise run test`
-  on macOS 15 for Apple Silicon and Intel. A tag-triggered release workflow.
+  on the minimum macOS (14, Apple Silicon) and on Intel. A tag-triggered release workflow.
   Dependabot for actions, every action pinned by SHA, and read-only permissions
   by default.
 - **Repository files.** README, AGENTS.md, CONTEXT.md (domain terms), CONTRIBUTING,
-  SECURITY, CODE_OF_CONDUCT, issue and PR templates, and an MIT license.
+  SECURITY, CODE_OF_CONDUCT, issue and PR templates, `.coderabbit.yaml`, a
+  `.gitignore` that covers signing material and `.env` files, and an MIT license.
 
 ## Optional additions
 
 Add these when an app needs them:
 
 - `lint:python` when the app bundles a Python script.
-- `smoke` tasks for checks that need macOS permissions and can only run locally.
+- `smoke` tasks for checks that need macOS permissions (TCC) and can only run
+  locally. Follow open-appshot's pattern: a standalone Swift fixture in
+  `Tests/Fixtures/` that the smoke script builds, a task that depends on `build`
+  or `install`, a script that removes only what it created, and a README note
+  that it runs locally only.
 - Developer ID signing and notarization in `Scripts/package-release.sh`.
-- `.coderabbit.yaml` with path instructions about the app's risks.
+- More `.coderabbit.yaml` path instructions about the app's own risks.

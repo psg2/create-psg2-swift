@@ -9,7 +9,8 @@
    ```
 
 The release workflow checks that the tag matches `VERSION`, runs `mise run ci`,
-builds a universal app, checks it again and publishes the ZIP and its SHA-256
+builds a universal app, extracts the archive and checks the app inside it (checksum,
+signature, versions, both architectures), then publishes the ZIP and its SHA-256
 checksum with the release notes.
 
 To build the archive in `build/release/` without publishing:

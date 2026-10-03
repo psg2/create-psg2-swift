@@ -1,0 +1,31 @@
+# CodeRabbit configuration: https://docs.coderabbit.ai/reference/configuration
+language: "en"
+
+reviews:
+  profile: "chill"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: true
+  auto_review:
+    enabled: true
+    drafts: false
+  path_filters:
+    - "!Resources/AppIcon.png"
+    - "!build/**"
+    - "!.build/**"
+  path_instructions:
+    - path: "Sources/**"
+      instructions: |
+        TemplateAppCore holds domain logic and must not import SwiftUI or
+        AppKit; views live in TemplateApp. Code must pass `mise run lint:swift`
+        and compile with Swift warnings treated as errors.
+    - path: "Scripts/**"
+      instructions: |
+        Scripts target Bash 3.2 or newer and must pass ShellCheck. Cleanup
+        must only remove what the script created or what it verified by
+        bundle identifier.
+
+chat:
+  auto_reply: true
