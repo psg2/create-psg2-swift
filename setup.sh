@@ -65,7 +65,8 @@ mv "Sources/$SWIFT_NAME/TemplateApp.swift" "Sources/$SWIFT_NAME/$SWIFT_NAME.swif
 mv "Tests/TemplateAppCoreTests" "Tests/${SWIFT_NAME}CoreTests"
 
 # The template's own notes don't belong in the new app.
-rm -f setup.sh docs/TEMPLATE.md
+mv docs/APP_README.md README.md
+rm -f setup.sh
 sed -i '' -e 's/ setup\.sh"/"/' mise.toml
 
 rm -rf .git
