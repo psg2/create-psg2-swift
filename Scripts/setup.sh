@@ -3,17 +3,20 @@ set -euo pipefail
 
 # create-psg2-swift: turns this template into your app.
 #
-#   git clone https://github.com/psg2/create-psg2-swift.git my-app
+#   gh repo create psg2/my-app --template psg2/create-psg2-swift --private --clone
 #   cd my-app
-#   ./setup.sh
+#   ./Scripts/setup.sh
 #
 # It asks for the app's display name, bundle identifier and GitHub repository,
 # then renames every placeholder (Template App, TemplateApp, template-app,
-# TEMPLATE_APP, the bundle identifier and the repository), restarts Git history,
-# installs the tools and runs the checks. Pass the answers as arguments to skip
-# the prompts:
+# TEMPLATE_APP, the bundle identifier and the repository), commits the result,
+# installs the tools and runs the checks. A copy made from the template keeps
+# its repository and remote. A plain clone of create-psg2-swift starts a fresh
+# Git history instead. Pass the answers as arguments to skip the prompts:
 #
-#   ./setup.sh "My App" com.example.my-app psg2/my-app
+#   ./Scripts/setup.sh "My App" com.example.my-app psg2/my-app
+
+cd "$(dirname "$0")/.."
 
 # Run once: the renames below can't be applied twice.
 [[ -d Sources/TemplateApp && -f docs/APP_README.md ]] || {
@@ -86,11 +89,16 @@ mv "Tests/TemplateAppCoreTests" "Tests/${SWIFT_NAME}CoreTests"
 
 # The template's own notes don't belong in the new app.
 mv docs/APP_README.md README.md
-rm -f setup.sh
-sed -i '' -e 's/ setup\.sh"/"/' mise.toml
+rm -f Scripts/setup.sh
 
-rm -rf .git
-git init -q -b main
+# A plain clone of the template still points at create-psg2-swift: start over.
+ORIGIN="$(git remote get-url origin 2>/dev/null || true)"
+case "$ORIGIN" in
+  "" | *[/:]psg2/create-psg2-swift | *[/:]psg2/create-psg2-swift.git)
+    rm -rf .git
+    git init -q -b main
+    ;;
+esac
 git add -A
 git commit -q -m "Start $DISPLAY_NAME from create-psg2-swift"
 
