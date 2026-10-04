@@ -2,21 +2,38 @@
 
 A starting point for native macOS apps in Swift, shared by psg2 projects such as
 [colima-mini](https://github.com/psg2/colima-mini) and
-[open-appshot](https://github.com/psg2/open-appshot). `setup.sh` replaces this
+[open-appshot](https://github.com/psg2/open-appshot). `Scripts/setup.sh` replaces this
 README with the app's own, `docs/APP_README.md`.
 
 ## Start a new app
 
+Create the app's repository from this template, then run the setup script:
+
+```sh
+gh repo create psg2/my-app --template psg2/create-psg2-swift --private --clone
+cd my-app
+./Scripts/setup.sh                                           # asks for each value
+./Scripts/setup.sh "My App" com.example.my-app psg2/my-app   # or pass them
+```
+
+The "Use this template" button on GitHub works the same way. The script keeps
+the repository and its `origin` remote and commits the setup on the current
+branch. Push it with `git push`.
+
+To start without a GitHub repository, clone the template instead:
+
 ```sh
 git clone https://github.com/psg2/create-psg2-swift.git my-app
 cd my-app
-./setup.sh                                           # asks for each value
-./setup.sh "My App" com.example.my-app psg2/my-app   # or pass them
+./Scripts/setup.sh
 ```
 
-The script replaces every placeholder, renames the Swift targets, starts a fresh
-Git history, installs the pinned tools and the pre-push hook, and runs
-`mise run ci`.
+When `origin` points at create-psg2-swift, or there is no `origin`, the script
+deletes the template's history and starts a new repository with one commit.
+Add your own remote afterward.
+
+In both cases the script replaces every placeholder, renames the Swift targets,
+installs the pinned tools and the pre-push hook, and runs `mise run ci`.
 
 | Placeholder | Becomes, for "My App" |
 | --- | --- |

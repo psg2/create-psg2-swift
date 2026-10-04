@@ -18,7 +18,7 @@ run = "swift format lint --configuration .swift-format --strict --recursive Sour
 
 [tasks."lint:shell"]
 description = "Check Bash scripts with ShellCheck"
-run = "shellcheck Scripts/*.sh setup.sh"
+run = "shellcheck Scripts/*.sh"
 
 [tasks."lint:actions"]
 description = "Check GitHub Actions workflows"
